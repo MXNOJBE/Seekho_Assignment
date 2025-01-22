@@ -1,6 +1,10 @@
 package com.compose.seekhoassignment.ui
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,10 +27,12 @@ import com.compose.seekhoassignment.data.viewmodel.AnimeListViewModel
 import com.compose.seekhoassignment.nav.DetailScreenNav
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun AnimeList(navController: NavHostController) {
+fun SharedTransitionScope.AnimeList(navController: NavHostController, animatedVisibilityScope: AnimatedVisibilityScope) {
     val animeListViewModel: AnimeListViewModel = koinViewModel()
     val animeListUiState by animeListViewModel.animeListUIFetchState.collectAsState()
+
 
     Box(
         contentAlignment = Alignment.Center,
@@ -53,7 +59,8 @@ fun AnimeList(navController: NavHostController) {
                             onClick = {
                                 navController.navigate(DetailScreenNav(malId = anime.malId))
                                 Log.d("ID", anime.malId.toString())
-                            }
+                            },
+                            animatedVisibilityScope
                         )
                     }
                 }
@@ -62,16 +69,42 @@ fun AnimeList(navController: NavHostController) {
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun AnimeItemRow(anime: Data, onClick: () -> Unit) {
-    Row(modifier = Modifier.padding(16.dp).clickable {
-        //Log.d("ID", anime.malId.toString())
-        onClick()
-    }) {
+fun SharedTransitionScope.AnimeItemRow(
+    anime: Data,
+    onClick: () -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope
+) {
+    Row(modifier = Modifier
+        .padding(16.dp)
+        .clickable {
+            //Log.d("ID", anime.malId.toString())
+            onClick()
+        }) {
         //AsyncImage(model = anime.images.jpgType.imageUrl, contentDescription = null)
         Column(modifier = Modifier.padding(start = 16.dp)) {
-            Text(text = anime.malId.toString(), fontWeight = FontWeight.Bold)
-            Text(text = "Episodes: ${anime.episodes ?: "N/A"}")
+            Text(
+                text = anime.malId.toString(),
+                modifier = Modifier.sharedElement(
+                    state = rememberSharedContentState(key = "${anime.malId}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = 1000)
+                    }
+                ),
+                fontWeight = FontWeight.Bold)
+            Text(
+                text = "Episodes: ${anime.episodes ?: "N/A"}",
+                modifier = Modifier.sharedElement(
+                    state = rememberSharedContentState(key = "${anime.episodes}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = 1000)
+                    }
+                )
+
+            )
             Text(text = "Rating: ${anime.score ?: "N/A"}")
         }
     }

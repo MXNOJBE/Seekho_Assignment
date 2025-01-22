@@ -1,7 +1,12 @@
 package com.compose.seekhoassignment.nav
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,19 +23,32 @@ data class DetailScreenNav(
     val malId: Int,
 )
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = ListScreenNav) {
+    val navigator = rememberListDetailPaneScaffoldNavigator<Any>()
 
-        composable<ListScreenNav> {
-            AnimeList(navController)
-        }
+    NavigableListDetailPaneScaffold(
+        navigator = navigator,
+        listPane = { ListScreenNav },
+        detailPane = { DetailScreenNav }
+    )
+    SharedTransitionLayout{
+        NavHost(navController = navController, startDestination = ListScreenNav) {
 
-        composable<DetailScreenNav> {
-            val args = it.toRoute<DetailScreenNav>()
-            AnimeDetailScreen(args.malId)
+            composable<ListScreenNav> {
+                AnimeList(
+                    navController,
+                    animatedVisibilityScope = this
+                )
+            }
+
+            composable<DetailScreenNav> {
+                val args = it.toRoute<DetailScreenNav>()
+                AnimeDetailScreen(args.malId, animatedVisibilityScope = this)
+            }
         }
     }
 }

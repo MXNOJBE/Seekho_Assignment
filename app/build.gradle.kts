@@ -78,4 +78,9 @@ dependencies {
     //coil
     implementation(libs.coil.compose)
 
+    //Material 3 Adaptive
+    implementation (libs.androidx.adaptive)
+    implementation (libs.androidx.adaptive.layout)
+    implementation( libs.androidx.adaptive.navigation)
+
 }
