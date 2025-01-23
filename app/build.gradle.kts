@@ -78,4 +78,21 @@ dependencies {
     //coil
     implementation(libs.coil.compose)
 
+    //Material 3 Adaptive
+    implementation (libs.androidx.adaptive)
+    implementation (libs.androidx.adaptive.layout)
+    implementation( libs.androidx.adaptive.navigation)
+
+
+    implementation( "com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
+
+
+    //Exo
+    implementation ("androidx.media3:media3-exoplayer:1.2.1")
+    implementation ("androidx.media3:media3-ui:1.2.1")
+    implementation ("androidx.media3:media3-common:1.2.1")
+
+
+
+
 }

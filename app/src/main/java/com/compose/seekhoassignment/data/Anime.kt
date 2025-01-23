@@ -19,12 +19,32 @@ data class AnimeListResponse(
 data class Data(
     @SerializedName("mal_id") val malId: Int,
     val url: String?,
-    //val trailer: Trailer,
+    val trailer: Trailer,
     val episodes: String?,
     val rating: String?,
-    val score: Float,
+    val score: Float?,
+    val images: Images,
+    val titles: List<Title>,
+    @SerializedName("title_english") val titleEnglish:String?,
+    val synopsis: String?,
+    val genres: List<Genre>,
+    val producers: List<Producer>
+)
 
-    //val images: Images
+@Serializable
+data class Producer(
+    @SerializedName("mal_id") val malId: Int,
+    @SerializedName("type") val producerType: String?,
+    @SerializedName("name") val producerName: String?,
+    @SerializedName("url") val producerUrl: String?,
+)
+
+@Serializable
+data class Genre(
+    @SerializedName("mal_id") val malId: Int,
+    @SerializedName("type") val genreType: String?,
+    @SerializedName("name") val genreName: String?,
+    @SerializedName("url") val genreUrl: String?,
 )
 
 @Serializable
@@ -53,17 +73,17 @@ data class ImageTypes(
 
 @Serializable
 data class Trailer(
-    @SerializedName("youtube_id") val youtubeId: String?,
     val url: String?,
     @SerializedName("embed_url") val embedUrl: String?,
+    @SerializedName("youtube_id") val youtubeId: String?,
     //val images: List<ImageTypes>
 
 )
 
 @Serializable
 data class Images(
-    val jpgType: JPG,
-    val webPType: WebP
+    @SerializedName("jpg") val jpgType: JPG,
+    @SerializedName("webp") val webPType: WebP
 )
 
 @Serializable
@@ -82,3 +102,9 @@ data class Pagination(
     val items: Item
 )
 
+
+@Serializable
+data class Title(
+    val type: String?,
+    val title: String?
+)
