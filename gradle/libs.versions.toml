@@ -3,6 +3,7 @@ adaptiveNavigation = "1.1.0-alpha09"
 agp = "8.7.3"
 coilCompose = "2.6.0"
 converterGson = "2.9.0"
+exoplayer = "2.19.1"
 gson = "2.11.0"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
@@ -42,6 +43,7 @@ androidx-adaptive-navigation = { module = "androidx.compose.material3.adaptive:a
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

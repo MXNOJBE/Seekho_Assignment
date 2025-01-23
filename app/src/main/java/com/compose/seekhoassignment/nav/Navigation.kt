@@ -2,7 +2,6 @@ package com.compose.seekhoassignment.nav
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
@@ -47,7 +46,7 @@ fun Navigation() {
 
             composable<DetailScreenNav> {
                 val args = it.toRoute<DetailScreenNav>()
-                AnimeDetailScreen(args.malId, animatedVisibilityScope = this)
+                AnimeDetailScreen(args.malId, animatedVisibilityScope = this, navController)
             }
         }
     }
