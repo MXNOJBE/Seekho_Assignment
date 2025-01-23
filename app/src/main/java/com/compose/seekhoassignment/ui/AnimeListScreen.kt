@@ -8,8 +8,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -113,12 +115,13 @@ fun SharedTransitionScope.AnimeItemRow(
     Card(
         onClick = { onClick() },
         modifier = Modifier
-            .padding(vertical = 4.dp)
+            .padding(4.dp)
             .fillMaxWidth()
     ) {
 
-        Row(modifier = Modifier
-            .padding(16.dp)
+        Row(
+            modifier = Modifier
+            .fillMaxWidth()
             .clickable {
                 //Log.d("ID", anime.malId.toString())
                 onClick()
@@ -135,12 +138,17 @@ fun SharedTransitionScope.AnimeItemRow(
                 contentDescription = null)
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
-                    text = "Title: ${anime.titleEnglish ?: "N/A"}",
-                    fontWeight = FontWeight.Bold
+                    text = anime.titleEnglish ?: "N/A",
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = (-0.5).sp,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Episodes: ${anime.episodes ?: "N/A"}",
                 )
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(text = "Rating: ${anime.score ?: "N/A"}")
             }
         }
